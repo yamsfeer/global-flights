@@ -1,5 +1,5 @@
-import App from './src/app'
+import App from './src/app.js'
 
 window.onload = () => {
-  new App()
+  window.app = new App()
 }

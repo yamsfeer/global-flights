@@ -1,46 +1,37 @@
-import { scene, renderer, group } from 'scene/scene'
-import { camera, controls } from 'scene/camera'
-import stats from 'tools/stats'
-import gui from 'tools/dat.gui'
-import earth from 'objects/earth'
+import { scene, renderer, updateRenderer } from 'scene/scene.js'
+import { camera, updateCamera, controls } from 'scene/camera.js'
+import stats from 'tools/stats.js'
+import gui from 'tools/dat.gui.js'
+import Earth from 'objects/earth.js'
 
 class App {
   constructor() {
-    this.stats = stats
-    this.gui = gui
-
     this.renderer = renderer
-    this.group = group
     this.scene = scene
 
     this.camera = camera
     this.controls = controls
 
+    this.stats = stats
+    this.gui = gui
+
     this.init()
     this.render()
   }
   init() {
-    document.getElementById('app').appendChild(this.renderer.domElement)
-    document.getElementById('app').appendChild(this.stats.domElement)
+    this.earth = new Earth()
+    this.scene.add(this.earth)
 
     window.addEventListener('resize', () => {
-      this.camera.aspect = window.innerWidth / window.innerHeight
-      this.camera.updateProjectionMatrix()
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      updateCamera()
+      updateRenderer()
     }, false)
 
-    this.initScene()
-  }
-  initScene() {
-    this.earth = earth
-    this.group.add(this.earth.mesh)
-
-    this.camera.aspect = window.innerWidth / window.innerHeight
-    this.camera.updateProjectionMatrix()
+    document.getElementById('app').appendChild(this.renderer.domElement)
+    document.getElementById('app').appendChild(this.stats.domElement)
   }
   render() {
     requestAnimationFrame(this.render.bind(this))
-    group.rotation.y -= 0.005
     this.stats.update()
     this.renderer.render(this.scene, this.camera)
   }

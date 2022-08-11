@@ -4,45 +4,30 @@ import {
   MeshBasicMaterial,
   Mesh,
 } from 'three'
-import { earthConfig } from 'config'
+import { earthOpts } from 'config'
 
 class Earth {
-  constructor(opts = earthConfig) {
-    this.opts = Object.assign({}, earthConfig, opts)
-    const {
-      radius,
-      horFragment,
-      verFragment,
-    } = this.opts
-    const geo = new SphereGeometry(
-      radius,
-      horFragment,
-      verFragment,
-    )
-    const loader = new TextureLoader()
-    const texture = loader.load(this.opts.textureUrl)
-    const material = new MeshBasicMaterial({
-      color: 0xffffff,
-      // wireframe: true,
-      map: texture,
-    })
-    const mesh = new Mesh(geo, material)
+  constructor() {
+    const { radius, horFragment, verFragment, textureUrl } = earthOpts
 
-    this.mesh = mesh
+    const geo = new SphereGeometry(radius, horFragment, verFragment)
+    const loader = new TextureLoader()
+    const material = new MeshBasicMaterial({
+      map: loader.load(textureUrl),
+    })
+
+    this.mesh = new Mesh(geo, material)
+    return this.mesh
   }
 }
 
-const singleInstance = (() => {
-  let single = null
-  return new Proxy(Earth, {
-    construct(target, args) {
-      if (single) {
-        return single
-      }
-      single = Reflect.construct(target, args)
-      return single
-    },
-  })
-})()
+let instance = null // 单例模式
+let proxy = new Proxy(Earth, {
+  construct(target, args) { // 对 new 操作代理
+    return instance
+      ? instance
+      : instance = Reflect.construct(target, args)
+  }
+})
 
-export default new singleInstance()
+export default proxy

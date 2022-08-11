@@ -1,14 +1,14 @@
 import { Scene, WebGLRenderer, Group } from 'three'
+import { rendererOpts } from 'config'
 
-const _scene = new Scene()
-const _renderer = new WebGLRenderer()
-const _group = new Group()
+const { antialias, clearColor, width, height } = rendererOpts
 
-_renderer.setClearColor(0x000000)
-_renderer.setSize(window.innerWidth, window.innerHeight)
+export const scene = new Scene()
+export const renderer = new WebGLRenderer({ antialias })
 
-_scene.add(_group)
+renderer.setClearColor(clearColor)
+renderer.setSize(width, height)
 
-export const scene = _scene
-export const renderer = _renderer
-export const group = _group
+export function updateRenderer() {
+  renderer.setSize(window.innerWidth, window.innerHeight)
+}
