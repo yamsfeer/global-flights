@@ -39,10 +39,15 @@ class App {
   }
   renderAirport() {
     const chinaAirports = this.database.find('country', 'china')
-    const airports = new Airport()
-    airports.draw(chinaAirports)
+    const usAirports = this.database.find('country', 'united state')
+    const airportManager = new Airport()
 
-    this.scene.add(airports.points)
+    airportManager.add(usAirports)
+    airportManager.update(chinaAirports)
+    airportManager.on('hover', target => console.log('hover', target))
+    airportManager.on('click', target => console.log('click', target))
+
+    this.scene.add(airportManager.points)
   }
   render() {
     requestAnimationFrame(this.render.bind(this))

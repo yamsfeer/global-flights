@@ -151,7 +151,7 @@ export default class Database {
 
   find(prop, value) {
     return this.airports.filter(airport => {
-      return airport[prop].toLowerCase() === value.toLowerCase()
+      return airport[prop].toLowerCase().includes(value.toLowerCase())
     })
   }
 }

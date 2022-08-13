@@ -3,7 +3,7 @@ import particle from 'resource/images/particle.png'
 import { Vector3, TextureLoader } from 'three'
 
 export const earthOpts = {
-  radius: 200,
+  radius: 300,
   horFragment: 50,
   verFragment: 50,
   textureUrl: texture
@@ -26,7 +26,7 @@ export const cameraOpts = {
 
 export const controlOpts = {
   enableZoom: true,
-  maxDistance: 1500,
+  maxDistance: 2000,
   minDistance: 500
 }
 
