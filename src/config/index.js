@@ -1,11 +1,11 @@
-import texture from 'resource/images/map.png'
-import { Vector3 } from 'three'
+import texture from 'resource/images/blue.jpg'
+import particle from 'resource/images/particle.png'
+import { Vector3, TextureLoader } from 'three'
 
 export const earthOpts = {
   radius: 200,
   horFragment: 50,
   verFragment: 50,
-  texture: true,
   textureUrl: texture
 }
 
@@ -21,11 +21,19 @@ export const cameraOpts = {
   aspect: window.innerWidth / window.innerHeight,
   near: 0.1,
   far: 1000,
-  position: new Vector3(-30, 40, 500)
+  position: new Vector3(30, 40, 500)
 }
 
 export const controlOpts = {
   enableZoom: true,
   maxDistance: 1500,
   minDistance: 500
+}
+
+// 机场粒子
+export const airportOpts = {
+  particleMaterial: {
+    size: 3,
+    map: new TextureLoader().load(particle),
+  }
 }

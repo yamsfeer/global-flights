@@ -31,10 +31,12 @@ export default {
   resolve: {
     alias: {
       config: path.resolve(__dirname, 'src/config/index.js'),
-      scene: path.resolve(__dirname, 'src/scene'),
+      database: path.resolve(__dirname, 'src/database'),
       objects: path.resolve(__dirname, 'src/objects'),
       resource: path.resolve(__dirname, 'src/resource'),
+      scene: path.resolve(__dirname, 'src/scene'),
       tools: path.resolve(__dirname, 'src/tools'),
+      utils: path.resolve(__dirname, 'src/utils'),
     }
   },
   plugins: [

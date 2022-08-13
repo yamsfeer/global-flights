@@ -4,6 +4,9 @@ import stats from 'tools/stats.js'
 import gui from 'tools/dat.gui.js'
 import Earth from 'objects/earth.js'
 
+import Database from 'database'
+import Airport from 'objects/airport'
+
 class App {
   constructor() {
     this.renderer = renderer
@@ -11,11 +14,12 @@ class App {
 
     this.camera = camera
     this.controls = controls
-
     this.stats = stats
     this.gui = gui
 
     this.init()
+    this.initDatabase()
+    this.renderAirport()
     this.render()
   }
   init() {
@@ -29,6 +33,16 @@ class App {
 
     document.getElementById('app').appendChild(this.renderer.domElement)
     document.getElementById('app').appendChild(this.stats.domElement)
+  }
+  initDatabase() {
+    this.database = new Database()
+  }
+  renderAirport() {
+    const chinaAirports = this.database.find('country', 'china')
+    const airports = new Airport()
+    airports.draw(chinaAirports)
+
+    this.scene.add(airports.points)
   }
   render() {
     requestAnimationFrame(this.render.bind(this))
